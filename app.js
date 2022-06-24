@@ -1,5 +1,6 @@
 import express from 'express';
 import apiConnect from './api-connect.js';
+import geoloc from './geoloc.js'
 import path from 'path';
 const __dirname = path.resolve(path.dirname(''));
 const app = express();
@@ -13,7 +14,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/tweets', async (req, res) => {
-    return await res.json(apiConnect(req.query.keywords));
+    return res.json(await apiConnect(req.query.keywords));
 });
+
+app.get('/geoloc', async (req, res) => {
+    return res.json(await geoloc(req.query.place));
+})
 
 app.listen(port);
